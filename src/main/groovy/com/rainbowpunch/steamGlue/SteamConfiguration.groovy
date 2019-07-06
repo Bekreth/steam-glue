@@ -1,6 +1,7 @@
 package com.rainbowpunch.steamGlue
 
 import java.nio.file.Path
+import java.nio.file.Paths
 
 class SteamConfiguration {
 
@@ -9,10 +10,19 @@ class SteamConfiguration {
     BuildEnvironment buildEnvironment
 
     String username
-    String depotScript
+    String appBuildScript
 
-    protected Path sdkPath() { new File(sdk).toPath() }
-    protected Path contentRootPath() { new File(sdk + contentRoot).toPath() }
+    List<List<Object>> depots
+
+    protected Path sdkPath() { Paths.get(sdk) }
+    protected Path contentRootPath() {
+        if (contentRoot.startsWith(File.pathSeparator)) Paths.get(contentRoot)
+        else sdkPath().resolve(contentRoot)
+    }
+
+    protected List<Path> getDepots() {
+        TargetOS.targetOSPaths(contentRootPath(), depots)
+    }
 }
 
 enum BuildEnvironment {

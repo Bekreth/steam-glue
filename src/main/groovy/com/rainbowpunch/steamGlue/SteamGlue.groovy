@@ -9,11 +9,14 @@ class SteamGlue implements Plugin<Project> {
         def extension = project.extensions.create('steam', SteamConfiguration)
         project.task('hello') {
             doLast {
+                TargetOS.validateDepots(extension.depots)
+
                 println(extension.sdk)
                 println(extension.contentRoot)
                 println(extension.buildEnvironment)
                 println(extension.username)
-                println(extension.depotScript)
+                println(extension.appBuildScript)
+                println(extension.depots)
             }
         }
     }

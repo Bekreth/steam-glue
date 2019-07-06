@@ -15,7 +15,7 @@ class SteamRise extends DefaultTask {
 
         String command = configuration.buildEnvironment.steamShellFile(configuration.sdkPath()).path
         command += " +login ${configuration.username} PASSWORD"
-        command += " +run_app_build ${configuration.depotScript}"
+        command += " +run_app_build ${configuration.appBuildScript}"
         command += " +exit"
 
         println(command)
